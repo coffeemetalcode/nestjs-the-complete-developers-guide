@@ -12,22 +12,16 @@ import { MessagesService } from './messages.service';
 
 @Controller('messages')
 export class MessagesController {
-  messagesService: MessagesService;
-
-  constructor() {
-    // DON'T DO THIS IN REAL APPS
-    // USE DEPENDENCY INJECTION INSTEAD
-    this.messagesService = new MessagesService();
-  }
+  constructor(private _messagesService: MessagesService) {}
 
   @Get()
   async getMessages() {
-    return await this.messagesService.findAll();
+    return await this._messagesService.findAll();
   }
 
   @Get('/:id')
   async getMessage(@Param('id') id: string) {
-    const message = await this.messagesService.findOne(id);
+    const message = await this._messagesService.findOne(id);
 
     if (!message) {
       throw new NotFoundException(`no message of id ${id} was found!`);
@@ -38,6 +32,6 @@ export class MessagesController {
 
   @Post()
   createMessage(@Body() body: CreateMessageDto) {
-    return this.messagesService.create(body);
+    return this._messagesService.create(body);
   }
 }
