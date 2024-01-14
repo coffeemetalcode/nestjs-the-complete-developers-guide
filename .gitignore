@@ -131,3 +131,6 @@ dist
 
 # unneccessary backup files
 */*.bak/
+
+# dev repsoitory json file
+*/messages.json
