@@ -134,3 +134,6 @@ dist
 
 # dev repsoitory json file
 */messages.json
+
+# sqlite databases
+*/*.sqlite
