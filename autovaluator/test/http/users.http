@@ -1,0 +1,17 @@
+### create new user
+POST http://localhost:3009/auth/signup
+content-type: application/json
+
+{
+  "email": "david@david.co",
+  "password": "insecurepa$$word"
+}
+
+### bad request
+POST http://localhost:3009/auth/signup
+content-type: application/json
+
+{
+  "email": "https://not.email.nz",
+  "password": 47
+}
