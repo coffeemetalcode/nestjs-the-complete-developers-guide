@@ -29,6 +29,7 @@ const DB_SQLITE_CONFIG: TypeOrmModuleOptions = {
 };
 
 @Module({
+  // eslint-disable-next-line prettier/prettier
   imports: [
     UsersModule,
     ReportsModule,
