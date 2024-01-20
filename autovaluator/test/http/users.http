@@ -1,17 +1,34 @@
 ### create new user
 POST http://localhost:3009/auth/signup
-content-type: application/json
+Content-Type: application/json
 
 {
-  "email": "david@david.co",
-  "password": "insecurepa$$word"
+  "email": "me@me.me",
+  "password": "p@$$"
 }
 
 ### bad request
 POST http://localhost:3009/auth/signup
-content-type: application/json
+Content-Type: application/json
 
 {
   "email": "https://not.email.nz",
   "password": 47
 }
+
+### get user by id
+GET http://localhost:3009/auth/2
+
+### get user by email
+GET http://localhost:3009/auth?email=me@me.me
+
+###
+PATCH http://localhost:3009/auth/2
+Content-Type: application/json
+
+{
+  "password": "pa$$word"
+}
+
+### remove a user
+DELETE http://localhost:3009/auth/3
