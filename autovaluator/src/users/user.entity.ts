@@ -1,3 +1,4 @@
+// import { Exclude } from 'class-transformer';
 import {
   AfterInsert,
   AfterRemove,
@@ -15,6 +16,7 @@ export class User {
   @Column()
   email: string;
 
+  // @Exclude()
   @Column()
   password: string;
 
