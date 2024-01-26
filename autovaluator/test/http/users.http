@@ -1,5 +1,26 @@
-### create new user
+###
+# @name /signup
 POST http://localhost:3009/auth/signup
+Content-Type: application/json
+
+{
+  "email": "you@you.you",
+  "password": "yourPa$$W0rd"
+}
+
+###
+# @name /signin
+POST http://localhost:3009/auth/signin
+Content-Type: application/json
+
+{
+  "email": "you@you.you",
+  "password": "yourPa$$W0rd"
+}
+
+###
+# @name /signin
+POST http://localhost:3009/auth/signin
 Content-Type: application/json
 
 {
@@ -7,7 +28,16 @@ Content-Type: application/json
   "password": "p@$$"
 }
 
-### bad request
+###
+# @name /whoam
+GET http://localhost:3009/auth/whoam
+
+###
+# @name /signout
+POST http://localhost:3009/auth/signout
+
+###
+# @name /bad
 POST http://localhost:3009/auth/signup
 Content-Type: application/json
 
@@ -31,4 +61,4 @@ Content-Type: application/json
 }
 
 ### remove a user
-DELETE http://localhost:3009/auth/3
+DELETE http://localhost:3009/auth/11
