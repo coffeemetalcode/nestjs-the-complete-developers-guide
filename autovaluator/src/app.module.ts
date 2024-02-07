@@ -33,6 +33,7 @@ const DB_SQLITE_CONFIG: TypeOrmModuleOptions = {
   imports: [
     UsersModule,
     ReportsModule,
+    // TypeOrmModule.forRoot(DB_MYSQL_CONFIG),
     TypeOrmModule.forRoot(DB_SQLITE_CONFIG),
   ],
   controllers: [AppController],

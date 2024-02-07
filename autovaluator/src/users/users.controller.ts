@@ -5,26 +5,32 @@ import {
   Delete,
   Get,
   NotFoundException,
-  Param,
   Patch,
+  Param,
   Post,
   Query,
   Session,
   // UseInterceptors,
+  UseGuards,
 } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
+import { CurrentUser } from './decorators/current-user.decorator';
 import { CreateUserDTO } from './dtos/create-user.dto';
+import { AuthGuard } from '../guards/auth.guard';
+// import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
 import { UpdateUserDTO } from './dtos/update-user.dto';
 import { UserDTO } from './dtos/user.dto';
 import {
   Serialize,
   // SerializeInterceptor,
 } from '../interceptors/serialize.interceptor';
+import { User } from './user.entity';
 import { UsersService } from '../users/users.service';
 
 @Serialize(UserDTO)
 @Controller('auth')
+// @UseInterceptors(CurrentUserInterceptor) // <-- controller scoped interceptor
 export class UsersController {
   constructor(
     private _authService: AuthService,
@@ -34,7 +40,7 @@ export class UsersController {
   @Post('/signup')
   async createUser(@Body() body: CreateUserDTO, @Session() session: any) {
     const user = await this._authService.register(body.email, body.password);
-    session.user = user.id;
+    session.id = user.id;
     console.log('signup user', user.id);
 
     return user;
@@ -47,19 +53,25 @@ export class UsersController {
       body.password,
     );
     console.log('signin user', user.id);
-    session.user = user.id;
+    session.id = user.id;
 
     return user;
   }
 
-  @Get('/whoam')
+  /* @Get('/whoam')
   async whoAm(@Session() session: any) {
-    return await this._usersService.findOne(session.user);
+    return await this._usersService.findOne(session.id);
+  } */
+
+  @Get('/whoam')
+  @UseGuards(AuthGuard)
+  async whoAm(@CurrentUser() user: User) {
+    return user;
   }
 
   @Post('/signout')
   signOut(@Session() session: any) {
-    session.user = null;
+    session.id = null;
   }
 
   // @UseInterceptors(new SerializeInterceptor(UserDTO))
