@@ -16,9 +16,14 @@ export class UsersService {
     const user = this._repo.create({ email, password });
 
     this._repo.save(user);
+    return user;
   }
 
   findOne(id: number) {
+    if (!id) {
+      throw new NotFoundException('no user found');
+    }
+
     return this._repo.findOneBy({ id });
   }
 
