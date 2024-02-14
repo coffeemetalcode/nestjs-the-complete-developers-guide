@@ -71,13 +71,29 @@ describe('AuthService', () => {
   });
 
   it('returns a user authenticating with the correct password', async () => {
-    mockUsersService.find = () =>
+    // ! both the jest.spyOn and mockUserService.find approaches work here
+    const mockUser = {
+      id: 1,
+      email: 'e@mail.com',
+      password:
+        'cb296f2a1a485f5d.ac74566366081c023ca3b4b70f5a924cf172a0768f3e90bf0fcdd0b0eba332a7',
+    };
+
+    jest
+      .spyOn(mockUsersService, 'find')
+      .mockReturnValue(Promise.resolve([mockUser as User]));
+
+    /* mockUsersService.find = () =>
       Promise.resolve([
-        { id: 1, email: 'e@mail.com', password: 'pa$$w0rd' } as User,
-      ]);
+        {
+          id: 1,
+          email: 'e@mail.com',
+          password:
+            'cb296f2a1a485f5d.ac74566366081c023ca3b4b70f5a924cf172a0768f3e90bf0fcdd0b0eba332a7',
+        } as User,
+      ]); */
 
     const user = await service.authenticate('e@mail.com', 'pa$$w0rd');
-
     expect(user).toBeDefined();
   });
 });
