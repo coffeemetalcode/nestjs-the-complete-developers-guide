@@ -17,8 +17,8 @@ export class AuthService {
 
   async register(email: string, password: string) {
     // ensure unique user email
-    const exisitingUsers = await this._usersService.find(email);
-    if (exisitingUsers.length > 0) {
+    const existingUsers = await this._usersService.find(email);
+    if (existingUsers.length > 0) {
       throw new BadRequestException(
         `email address ${email} is already in use!`,
       );

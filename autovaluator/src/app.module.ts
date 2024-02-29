@@ -1,5 +1,8 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, ValidationPipe } from '@nestjs/common';
+import { APP_PIPE } from '@nestjs/core';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
+
+import CookieSession from 'cookie-session';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -37,6 +40,24 @@ const DB_SQLITE_CONFIG: TypeOrmModuleOptions = {
     TypeOrmModule.forRoot(DB_SQLITE_CONFIG),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_PIPE,
+      useValue: new ValidationPipe({
+        whitelist: true,
+      }),
+    },
+  ],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(
+        CookieSession({
+          keys: ['random-string'],
+        }),
+      )
+      .forRoutes('*');
+  }
+}

@@ -61,4 +61,4 @@ Content-Type: application/json
 }
 
 ### remove a user
-DELETE http://localhost:3009/auth/11
+DELETE http://localhost:3009/auth/17
