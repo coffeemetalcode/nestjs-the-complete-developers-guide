@@ -35,4 +35,26 @@ describe('Authentication (e2e)', () => {
         expect(email).toEqual(reqBody.email);
       });
   });
+
+  it('gets current user after signup', async () => {
+    // database error
+    const reqBody = {
+      email: 'b@c.com',
+      password: 'n0tS3cure',
+    };
+
+    const res = await request(app.getHttpServer())
+      .post('/auth/signup')
+      .send(reqBody)
+      .expect(201);
+
+    const cookie = res.get('Set-Cookie');
+
+    const { body } = await request(app.getHttpServer())
+      .get('/auth/whoam')
+      .set('Cookie', cookie)
+      .expect(200);
+
+    expect(body.email).toEqual(reqBody.email);
+  });
 });
