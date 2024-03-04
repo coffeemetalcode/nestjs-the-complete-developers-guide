@@ -1,4 +1,5 @@
 import { MiddlewareConsumer, Module, ValidationPipe } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_PIPE } from '@nestjs/core';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 
@@ -34,10 +35,24 @@ const DB_SQLITE_CONFIG: TypeOrmModuleOptions = {
 @Module({
   // eslint-disable-next-line prettier/prettier
   imports: [
-    UsersModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: `.env.${process.env.NODE_ENV}.local`,
+    }),
     ReportsModule,
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => {
+        return {
+          type: 'sqlite',
+          database: config.get<string>('DB_NAME'),
+          synchronize: true,
+          entities: [Report, User],
+        };
+      },
+    }),
+    UsersModule,
     // TypeOrmModule.forRoot(DB_MYSQL_CONFIG),
-    TypeOrmModule.forRoot(DB_SQLITE_CONFIG),
   ],
   controllers: [AppController],
   providers: [
