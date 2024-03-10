@@ -1,0 +1,14 @@
+###
+# @name /reports
+POST http://localhost:3009/reports
+Content-Type: application/json
+
+{
+  "make": "Toyota",
+  "model": "Celica",
+  "year": 1986,
+  "mileage": 247616,
+  "lon": 1,
+  "lat": 1,
+  "price": 7500
+}
