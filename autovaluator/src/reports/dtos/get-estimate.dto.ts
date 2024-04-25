@@ -9,9 +9,11 @@ import {
 } from 'class-validator';
 
 export class GetEstimateDTO {
+  // @Transform(({ value }) => value.toLowerCase())
   @IsString()
   make: string;
 
+  // @Transform(({ value }) => value.toLowerCase())
   @IsString()
   model: string;
 
