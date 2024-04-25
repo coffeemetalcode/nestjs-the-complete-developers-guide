@@ -9,6 +9,16 @@ Content-Type: application/json
 }
 
 ###
+# @name /signup
+POST http://localhost:3009/auth/signup
+Content-Type: application/json
+
+{
+  "email": "me@me.me",
+  "password": "myPa$$W0rd"
+}
+
+###
 # @name /signin
 POST http://localhost:3009/auth/signin
 Content-Type: application/json
@@ -25,7 +35,7 @@ Content-Type: application/json
 
 {
   "email": "me@me.me",
-  "password": "p@$$"
+  "password": "myPa$$W0rd"
 }
 
 ###

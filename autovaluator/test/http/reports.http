@@ -12,3 +12,28 @@ Content-Type: application/json
   "lat": 1,
   "price": 7500
 }
+
+###
+# Approve Report
+# @name /reports/:id
+PATCH http://localhost:3009/reports/5
+Content-Type: application/json
+
+{
+  "approved": true
+}
+
+###
+# Revoke Report Approval
+# @name /reports/:id
+PATCH http://localhost:3009/reports/5
+Content-Type: application/json
+
+{
+  "approved": false
+}
+
+###
+# Get estimate for existing vehicle
+# @name /reports?make=toyota&model=celica&lon=1&lat=1&mileage=225000&year=1980
+GET http://localhost:3009/reports?make=toyota&model=celica&lon=1&lat=1&mileage=225000&year=1980
