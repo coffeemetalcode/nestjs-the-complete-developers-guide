@@ -36,4 +36,4 @@ Content-Type: application/json
 ###
 # Get estimate for existing vehicle
 # @name /reports?make=toyota&model=celica&lon=1&lat=1&mileage=225000&year=1980
-GET http://localhost:3009/reports?make=toyota&model=celica&lon=1&lat=1&mileage=225000&year=1980
+GET http://localhost:3009/reports?make=Toyota&model=Celica&lon=1&lat=1&mileage=225000&year=1984
