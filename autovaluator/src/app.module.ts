@@ -40,7 +40,8 @@ const DB_SQLITE_CONFIG: TypeOrmModuleOptions = {
       envFilePath: `.env.${process.env.NODE_ENV}.local`,
     }),
     ReportsModule,
-    TypeOrmModule.forRootAsync({
+    TypeOrmModule.forRoot(),
+    /* TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => {
         return {
@@ -50,7 +51,7 @@ const DB_SQLITE_CONFIG: TypeOrmModuleOptions = {
           entities: [Report, User],
         };
       },
-    }),
+    }), */
     UsersModule,
     // TypeOrmModule.forRoot(DB_MYSQL_CONFIG),
   ],
@@ -66,11 +67,13 @@ const DB_SQLITE_CONFIG: TypeOrmModuleOptions = {
   ],
 })
 export class AppModule {
+  constructor(private _configService: ConfigService) {}
+
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(
         CookieSession({
-          keys: ['random-string'],
+          keys: [this._configService.get('COOKIE_KEY')],
         }),
       )
       .forRoutes('*');
